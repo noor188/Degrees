@@ -1,5 +1,6 @@
 # Degrees
 <p>A program that determines how many “degrees of separation” apart two actors are. Implemented using Python and data structures and algorithems</p>
+<P>This project is part of <a href="https://pll.harvard.edu/course/cs50s-introduction-artificial-intelligence-python">CS50's Introduction to Artificial Intelligence with Python course </a>, Harvard University</P>
 
 # Background
 
