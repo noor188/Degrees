@@ -95,37 +95,32 @@ def shortest_path(source, target):
 
     # TODO
     queue = deque([(None, source)])
-    explored = set()
-    result = []
-    parent_dict = {}
-    target_actor = None
-
+    parent = {(None, source): None}
+    
     while queue:
-        movie_id, node = queue.popleft()        
+        movie_id, person_id = queue.popleft()
 
-        if node in explored: 
-            continue
-        explored.add(node)
-        
-        neighbors = neighbors_for_person(node) # [()]
+        # found target
+        if person_id == target:
+            result = []
+            
+            while person_id != source:  
+                current_movie_person = (movie_id, person_id)              
+                current_parent_movie_id, current_parrent_id = parent[current_movie_person]             
+                result.append(current_movie_person)
+                person_id, movie_id = current_parrent_id, current_parent_movie_id                
+            
+            return result[::-1]
+
+        neighbors = neighbors_for_person(person_id)
 
         for neighbor in neighbors:
-            current_movie_id, person_id = neighbor
-            if person_id == target:
-                target_actor = neighbor
-                print(neighbor)
-                parent_dict[neighbor] = (current_movie_id, node)
-                break               
-            parent_dict[neighbor] = (current_movie_id, node)
-            queue.append(neighbor) 
+            if neighbor not in parent:
+                current_movie_id, current_person_id = neighbor
+                queue.append(neighbor)
+                parent[(current_movie_id, current_person_id)] = (movie_id, person_id)
 
-        result.append(target_actor)
-        if target_actor:
-            parent = parent_dict[target_actor]   
-            result.append(parent)     
-            return result[::-1]    
-        else: 
-            return None
+    return None
 
 
 def person_id_for_name(name):
