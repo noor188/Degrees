@@ -2,11 +2,12 @@ import csv
 import sys
 
 from util import Node, StackFrontier, QueueFrontier
+from collections import deque
 
 # Maps names to a set of corresponding person_ids
 names = {}
 
-# Maps person_ids to a dictionary of: name, birth, movies (a set of movie_ids)
+# Maps person_ids to a dictionary of: name, birth, "movies" (a set of movie_ids)
 people = {}
 
 # Maps movie_ids to a dictionary of: title, year, stars (a set of person_ids)
@@ -61,8 +62,8 @@ def main():
     print("Loading data...")
     load_data(directory)
     print("Data loaded.")
-
-    source = person_id_for_name(input("Name: "))
+    
+    source = person_id_for_name(input("Name: "))    
     if source is None:
         sys.exit("Person not found.")
     target = person_id_for_name(input("Name: "))
@@ -93,7 +94,38 @@ def shortest_path(source, target):
     """
 
     # TODO
-    raise NotImplementedError
+    queue = deque([(None, source)])
+    explored = set()
+    result = []
+    parent_dict = {}
+    target_actor = None
+
+    while queue:
+        movie_id, node = queue.popleft()        
+
+        if node in explored: 
+            continue
+        explored.add(node)
+        
+        neighbors = neighbors_for_person(node) # [()]
+
+        for neighbor in neighbors:
+            current_movie_id, person_id = neighbor
+            if person_id == target:
+                target_actor = neighbor
+                print(neighbor)
+                parent_dict[neighbor] = (current_movie_id, node)
+                break               
+            parent_dict[neighbor] = (current_movie_id, node)
+            queue.append(neighbor) 
+
+        result.append(target_actor)
+        if target_actor:
+            parent = parent_dict[target_actor]   
+            result.append(parent)     
+            return result[::-1]    
+        else: 
+            return None
 
 
 def person_id_for_name(name):
@@ -135,5 +167,5 @@ def neighbors_for_person(person_id):
     return neighbors
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":    
     main()
