@@ -13,3 +13,7 @@
   <li>Data Structures and algorithems: Queue, Breath first search</li>
 </ul>
 
+# Sample output
+
+<img src="https://github.com/noor188/Degrees/blob/main/image/sample_output.png" alt="sample_output">
+
