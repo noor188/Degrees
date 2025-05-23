@@ -6,3 +6,10 @@
 
 <p>According to the<a href="https://en.wikipedia.org/wiki/Six_Degrees_of_Kevin_Bacon"> Six Degrees of Kevin Bacon</a> game, anyone in the Hollywood film industry can be connected to Kevin Bacon within six steps, where each step consists of finding a film that two actors both starred in.</p>
 
+# Technologies Used
+
+<ul>
+  <li>Python</li>
+  <li>Data Structures and algorithems: Queue, Breath first search</li>
+</ul>
+
